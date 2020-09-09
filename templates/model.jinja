@@ -1,0 +1,89 @@
+<?php
+
+namespace {{data['namespaces']['currentEntity']['models']}};
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+
+use {{data['namespaces']['currentEntity']['models']}}\Traits\Attribute\{{data['modelName']}}Attribute;
+use {{data['namespaces']['currentEntity']['models']}}\Traits\Method\{{data['modelName']}}Method;
+use {{data['namespaces']['currentEntity']['models']}}\Traits\Relationship\{{data['modelName']}}Relationship;
+use {{data['namespaces']['currentEntity']['models']}}\Traits\Scope\{{data['modelName']}}Scope;
+
+
+/**
+ * Class {{data['modelName']}}.
+ */
+class {{data['modelName']}} extends Model
+{
+    use Eventually,
+        RecordableTrait,
+        SoftDeletes,
+        {{data['modelName']}}Attribute,
+        {{data['modelName']}}Method,
+        {{data['modelName']}}Relationship,
+        {{data['modelName']}}Scope;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+    */
+    protected $table = '{{data['tableName']}}';
+
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
+    protected $fillable = [ {% for f in data['fillable'] %}
+        "{{ f }}",{% endfor %}
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+    ];
+
+
+    {% if data['timestamp'] ==True%}
+    public $timestamps =["create_at","update_at"];
+    {%endif%}
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+    {% if data['hasSoftDelete'] ==True%}
+    "deleted_at",
+    {% endif %}
+    {% if data['timestamp'] ==True%}
+    "create_at",
+    "update_at",
+    {% endif %}
+    {%for item in data['dates'] %}
+    "{{item}}",
+    {%endfor%}
+    ];
+
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+
+    ];
+
+    /**
+     * @var array
+     */
+    protected $appends = [
+
+    ];
+
+}

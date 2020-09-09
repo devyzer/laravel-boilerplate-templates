@@ -1,0 +1,62 @@
+<?php
+
+namespace {{data['namespaces']['currentEntity']['backendControllers']}}\{{data['modelName']}};
+
+use {{data['namespaces']['global']['controllers']}}\Controller;
+use {{data['namespaces']['currentEntity']['models']}}\{{data['modelName']}};
+use {{data['namespaces']['currentEntity']['services']}}\{{data['modelName']}}Service;
+
+/**
+ * Class Deleted{{data['modelName']}}Controller.
+ */
+class Deleted{{data['modelName']}}Controller extends Controller
+{
+    /**
+     * @var {{data['modelName']}}Service
+     */
+    protected ${{data['modelVariable']}}Service;
+
+    /**
+     * Deleted{{data['modelName']}}Controller constructor.
+     *
+     * @param  {{data['modelName']}}Service  ${{data['modelVariable']}}Service
+     */
+    public function __construct({{data['modelName']}}Service ${{data['modelVariable']}}Service)
+    {
+        $this->{{data['modelVariable']}}Service = ${{data['modelVariable']}}Service;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('backend.{{data['names']['spinalcase']}}.deleted');
+    }
+
+    /**
+     * @param  {{data['modelName']}}  $deleted{{data['modelName']}}
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function update({{data['modelName']}} $deleted{{data['modelName']}})
+    {
+        $this->{{data['modelVariable']}}Service->restore($deleted{{data['modelName']}});
+
+        return redirect()->route('admin.{{data['modelVariable']}}.index')->withFlashSuccess(__('The {{data['title']}} was successfully restored.'));
+    }
+
+    /**
+     * @param  {{data['modelName']}}  $deleted{{data['modelName']}}
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function destroy({{data['modelName']}} $deleted{{data['modelName']}})
+    {
+        $this->{{data['modelVariable']}}Service->destroy($deleted{{data['modelName']}});
+
+        return redirect()->route('admin.{{data['modelVariable']}}.deleted')->withFlashSuccess(__('The {{data['title']}} was permanently deleted.'));
+    }
+}

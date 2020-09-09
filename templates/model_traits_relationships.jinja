@@ -1,0 +1,53 @@
+<?php
+
+namespace {{data['namespaces']['currentEntity']['models']}}\Traits\Relationship;
+
+/**
+ * Trait {{data['modelName']}}Relationship.
+ */
+trait {{data['modelName']}}Relationship
+{
+    {% if data['count'](data['relations']['hasMany'])%}
+    {% for item in data['relations']['hasMany'] %}
+    /**
+    * Get all the {{ item['related_table'] }} for the {{data['modelName']}}.
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function {{ item['name'] }}() {
+        return $this->hasMany({{ item['related_model_name'] }}::class)->latest();
+    }
+    {% endfor %}{% endif %}
+
+    {% if data['count'](data['relations']['belongsToMany'])%}
+    {% for item in data['relations']['belongsToMany'] %}
+    /**
+    * Get all the {{ item['related_table'] }} for the {{data['modelName']}}.
+    * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+    */
+    public function {{ item['name'] }}() {
+        return $this->belongsToMany({{ item['related_model_name'] }}::class,'{{ item['middleTable'] }}')->whereNull('{{ item['middleTable'] }}.deleted_at')->withTimestamps(){%if data['count'](item['pivotFields'])%}->withPivot([{%for field in item['pivotFields']%} '{{field}}',{%endfor%}]){%endif%};
+    }
+    {% endfor %}{% endif %}
+
+    {% if data['count'](data['relations']['belongsTo'])%}
+    {% for item in data['relations']['belongsTo'] %}
+    * Get  the {{ item['related_model_name'] }} that owns the {{data['modelName']}}.
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function {{ item['related_class'] }}() {
+        return $this->belongsTo({{ item['related_model_name'] }}::class);
+    }
+    {% endfor%}{% endif%}
+
+     {% if data['count'](data['foreign'])%}
+    {% for item in data['foreign'] %}
+       /**
+    * Get  the {{ item['modelName'] }} that owns the {{data['modelName']}}.
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function {{ item['lowerModelName'] }}() {
+        return $this->belongsTo({{ item['modelName'] }}::class,'{{item['field_name']}}');
+    }
+    {% endfor%}{% endif%}
+
+}

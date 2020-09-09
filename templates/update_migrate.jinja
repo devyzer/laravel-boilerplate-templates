@@ -1,0 +1,69 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class Update{{data['migrateName']}}Table extends Migration
+{
+    /**
+    * Run the migrations.
+    *
+    * @return void
+    */
+
+    public function up()
+    {
+        Schema::table('{{data['tableName']}}' {%if data['update_mode'] == true %}, function (Blueprint $table) {
+        {% for item in data['deleted_fields'] %}
+        $table->dropColumn('{{item["name"]}}');{%endfor%}
+           {% if data['count'](data['other_options']['deleted_foreign'])%}{% for item in data['other_options']['deleted_foreign'] %}
+              $table->dropForeign('{{item["foreign_name"]}}');
+              $table->dropColumn('{{item["name"]}}');{% endfor %}
+           {% endif %}
+
+       {% for item in data['added_fields'] %} {% if item['name']=="id" or item['name']=="Id"  %}
+            $table->{{item['dbtype']}}('id'); {% elif item['dbtype']=="enum" %}
+            $table->{{item['dbtype']}}('{{item['name']}}',[{% for key,el in item['selected_data'].items()%}  '{{key}}',{% endfor %}])->nullable() {% if 'default' in item %}{% if item['dbtype']=="string"%}->default('{{item['default']}}'){%else%}->default({{item['default']}}){% endif %}{% endif %} ; {% elif item['dbtype']=="rememberToken"  %}
+            $table->rememberToken(); {% else %}
+            $table->{{item['dbtype']}}('{{item['name']}}'{%for extra_value in item['extraDbValues']%},{{extra_value}}{%endfor%})->nullable() {% if 'default' in item %}{% if item['dbtype']=="string"%}->default('{{item['default']}}'){%else%}->default({{item['default']}}){% endif %}{% endif %} ; {% endif %} {% endfor %}
+
+       {% for item in data['updated_fields'] %} {% if item['name']=="id" or item['name']=="Id"  %}
+            $table->{{item['dbtype']}}('id'); {% elif item['dbtype']=="enum" %}
+            $table->{{item['dbtype']}}('{{item['name']}}',[{% for key,el in item['selected_data'].items()%}  '{{key}}',{% endfor %}]){% if item['serverStoreRules']['required']!="required"%}->nullable(){% endif %} {% if 'default' in item %}{% if item['dbtype']=="string"%}->default('{{item['default']}}'){%else%}->default({{item['default']}}){% endif %}{% endif %} ; {% elif item['dbtype']=="rememberToken"  %}
+            $table->rememberToken(); {% else %}
+            $table->{{item['dbtype']}}('{{item['name']}}'{%for extra_value in item['extraDbValues']%},{{extra_value}}{%endfor%}){% if item['serverStoreRules']['required']!="required"%}->nullable(){% endif %}  {% if 'default' in item %}{% if item['dbtype']=="string"%}->default('{{item['default']}}'){%else%}->default({{item['default']}}){% endif %}{% endif %} ->change(); {% endif %} {% endfor %}
+       {% if data['other_options']['timestamp']==2 %}
+            $table->timestamps();{%endif%}{% if data['other_options']['timestamp']==1 %}
+            $table->dropTimestamps();{%endif%}
+       {% if data['other_options']['hasSoftDelete']==2 %}
+            $table->softDeletes();{%endif%}{% if data['other_options']['hasSoftDelete']==1 %}
+            $table->dropSoftDeletes();{%endif%}
+
+
+
+         {% if data['count'](data['other_options']['added_foreign'])%}{% for item in data['other_options']['added_foreign'] %}
+            $table->foreign('{{item['field_name']}}')
+            ->references('{{item['related_field']}}')
+            ->on('{{item['table']}}')
+            ->onDelete('cascade');{% endfor %} {% endif %}
+  }{%endif%});
+    }
+    /**
+    * Reverse the migrations.
+    *
+    * @return void
+    */
+    public function down()
+    {
+         Schema::dropIfExists('{{data['tableName']}}'{%if data['count'](data['deleted_fields'])%} , function($table) {
+             {% for item in data['deleted_fields'] %}
+        $table->{{item["type"]}}('{{item["name"]}}');
+        {%endfor%}
+
+        }{%endif%});
+    }
+
+}
+
+

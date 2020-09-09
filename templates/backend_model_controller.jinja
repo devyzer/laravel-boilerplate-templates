@@ -1,0 +1,113 @@
+<?php
+
+namespace {{data['namespaces']['currentEntity']['backendControllers']}}\{{data['modelName']}};
+
+use {{data['namespaces']['global']['controllers']}}\Controller;
+use {{data['namespaces']['currentEntity']['models']}}\{{data['modelName']}};
+use {{data['namespaces']['currentEntity']['services']}}\{{data['modelName']}}Service;
+use {{data['namespaces']['currentEntity']['backendRequests']}}\{{data['modelName']}}\Delete{{data['modelName']}}Request;
+use {{data['namespaces']['currentEntity']['backendRequests']}}\{{data['modelName']}}\Edit{{data['modelName']}}Request;
+use {{data['namespaces']['currentEntity']['backendRequests']}}\{{data['modelName']}}\Store{{data['modelName']}}Request;
+use {{data['namespaces']['currentEntity']['backendRequests']}}\{{data['modelName']}}\Update{{data['modelName']}}Request;
+
+/**
+ * Class {{data['modelName']}}Controller.
+ */
+class {{data['modelName']}}Controller extends Controller
+{
+    /**
+     * @var {{data['modelName']}}Service
+     */
+    protected ${{data['modelVariable']}}Service;
+
+    /**
+     * {{data['modelName']}}Controller constructor.
+     *
+     * @param {{data['modelName']}}Service ${{data['modelVariable']}}Service
+     */
+    public function __construct({{data['modelName']}}Service ${{data['modelVariable']}}Service)
+    {
+        $this->{{data['modelVariable']}}Service = ${{data['modelVariable']}}Service;
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('backend.{{data['names']['spinalcase']}}.index');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function create()
+    {
+        return view('backend.{{data['names']['spinalcase']}}.create');
+    }
+
+    /**
+     * @param Store{{data['modelName']}}Request $request
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     * @throws \Throwable
+     */
+    public function store(Store{{data['modelName']}}Request $request)
+    {
+        ${{data['modelVariable']}} = $this->{{data['modelVariable']}}Service->store($request->validated());
+
+        return redirect()->route('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}})->withFlashSuccess(__('The {{data['title']}} was successfully created.'));
+    }
+
+    /**
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return mixed
+     */
+    public function show({{data['modelName']}} ${{data['modelVariable']}})
+    {
+        return view('backend.{{data['names']['spinalcase']}}.show')
+            ->with{{data['modelName']}}(${{data['modelVariable']}});
+    }
+
+    /**
+     * @param Edit{{data['modelName']}}Request $request
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return mixed
+     */
+    public function edit(Edit{{data['modelName']}}Request $request, {{data['modelName']}} ${{data['modelVariable']}})
+    {
+        return view('backend.{{data['names']['spinalcase']}}.edit')
+            ->with{{data['modelName']}}(${{data['modelVariable']}});
+    }
+
+    /**
+     * @param Update{{data['modelName']}}Request $request
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return mixed
+     * @throws \Throwable
+     */
+    public function update(Update{{data['modelName']}}Request $request, {{data['modelName']}} ${{data['modelVariable']}})
+    {
+        $this->{{data['modelVariable']}}Service->update(${{data['modelVariable']}}, $request->validated());
+
+        return redirect()->route('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}})->withFlashSuccess(__('The {{data['title']}} was successfully updated.'));
+    }
+
+    /**
+     * @param Delete{{data['modelName']}}Request $request
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function destroy(Delete{{data['modelName']}}Request $request, {{data['modelName']}} ${{data['modelVariable']}})
+    {
+        $this->{{data['modelVariable']}}Service->delete(${{data['modelVariable']}});
+
+        return redirect()->route('admin.${{data['modelVariable']}}.deleted')->withFlashSuccess(__('The {{data['title']}} was successfully deleted.'));
+    }
+}

@@ -1,0 +1,61 @@
+<?php
+
+use {{data['namespaces']['currentEntity']['backendControllers']}}\{{data['modelName']}}\Deleted{{data['modelName']}}Controller;
+use {{data['namespaces']['currentEntity']['backendControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller;
+use {{data['namespaces']['currentEntity']['models']}}\{{data['modelName']}};
+use Tabuna\Breadcrumbs\Trail;
+
+Route::group([
+    'prefix' => '{{data['modelVariable']}}',
+    'as' => '{{data['modelVariable']}}.',
+], function () {
+
+    Route::get('/', [{{data['modelName']}}Controller::class, 'index'])
+        ->name('index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('admin.dashboard')
+                ->push(__('{{data['title']}}'), route('admin.{{data['modelVariable']}}.index'));
+        });
+
+
+    Route::get('deleted', [Deleted{{data['modelName']}}Controller::class, 'index'])
+        ->name('deleted')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('admin.{{data['modelVariable']}}.index')
+                ->push(__('Deleted {{data['title']}}'), route('admin.{{data['modelVariable']}}.deleted'));
+        });
+
+
+    Route::get('create', [{{data['modelName']}}Controller::class, 'create'])
+        ->name('create')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('admin.{{data['modelVariable']}}.index')
+                ->push(__('Create {{data['modelName']}}'), route('admin.{{data['modelVariable']}}.create'));
+        });
+
+    Route::post('/', [{{data['modelName']}}Controller::class, 'store'])->name('store');
+
+    Route::group(['prefix' => '{{ "{" }}{{data['modelVariable']}}{{ "}" }}'], function () {
+        Route::get('/', [{{data['modelName']}}Controller::class, 'show'])
+            ->name('show')
+            ->breadcrumbs(function (Trail $trail, {{data['modelName']}} ${{data['modelVariable']}}) {
+                $trail->parent('admin.{{data['modelVariable']}}.index')
+                    ->push(${{data['modelVariable']}}->title, route('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}}));
+            });
+
+        Route::get('edit', [{{data['modelName']}}Controller::class, 'edit'])
+            ->name('edit')
+            ->breadcrumbs(function (Trail $trail, {{data['modelName']}} ${{data['modelVariable']}}) {
+                $trail->parent('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}})
+                    ->push(__('Edit'), route('admin.{{data['modelVariable']}}.edit', ${{data['modelVariable']}}));
+            });
+
+        Route::patch('/', [{{data['modelName']}}Controller::class, 'update'])->name('update');
+        Route::delete('/', [{{data['modelName']}}Controller::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['prefix' => '{deleted{{data['modelName']}}}'], function () {
+        Route::patch('restore', [Deleted{{data['modelName']}}Controller::class, 'update'])->name('restore');
+        Route::delete('permanently-delete', [Deleted{{data['modelName']}}Controller::class, 'destroy'])->name('permanently-delete');
+    });
+});

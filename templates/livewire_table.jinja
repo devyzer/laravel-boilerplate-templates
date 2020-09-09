@@ -1,0 +1,70 @@
+<?php
+
+namespace {{data['namespaces']['global']['livewireTables']}};
+
+use {{data['namespaces']['currentEntity']['models']}}\{{data['modelName']}};
+use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\TableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
+
+/**
+ * Class {{data['modelName']}}Table.
+ */
+class {{data['modelName']}}Table extends TableComponent
+{
+    /**
+     * @var string
+     */
+    public $sortField = 'id';
+
+    /**
+     * @var string
+     */
+    public $status;
+
+    /**
+     * @param string $status
+     */
+    public function mount($status = null): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return Builder
+     */
+    public function query(): Builder
+    {
+        $query = {{data['modelName']}}::query();
+
+        if ($this->status === 'deleted') {
+            return $query->onlyTrashed();
+        }
+
+        return $query;
+    }
+
+    /**
+     * @return array
+     */
+    public function columns(): array
+    {
+        return [
+            {% for column in data['columns'] %}
+            {% if column['inIndex']==True%}
+            Column::make(__('{{ column['title'] }}'), '{{ column['name'] }}')
+                {% if column['inIndex'] in data['searchable']%}
+                ->searchable()
+                {% endif %}
+                {% if column['inIndex'] in data['searchable']%}
+                ->sortable(),
+                {% else %},
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            Column::make(__('Actions'))
+                ->view('backend.{{data['names']['spinalcase']}}.includes.actions', '{{data['modelVariable']}}'),
+        ];
+    }
+}

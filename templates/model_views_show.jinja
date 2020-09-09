@@ -1,0 +1,37 @@
+{{'@'}}extends('backend.layouts.app')
+
+{{'@'}}section('title', __('View {{data['modelName']}}'))
+
+{{'@'}}section('content')
+    <x-backend.card>
+        <x-slot name="header">
+            {{'@'}}lang('View {{data['modelName']}}')
+        </x-slot>
+
+        <x-slot name="headerActions">
+            <x-utils.link class="card-header-action" :href="route('admin.{{data['modelVariable']}}.index')" :text="__('Back')" />
+        </x-slot>
+
+        <x-slot name="body">
+            <table class="table table-hover">
+                {%for item in data['columns'] %}
+                <tr>
+                    <th>{{'@'}}lang('{{ item['title'] }}')</th>
+                    <td>{{'{{'}}   ${{data['modelVariable']}}->{{ item['name'] }} {{'}}'}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </x-slot>
+
+        <x-slot name="footer">
+            <small class="float-right text-muted">
+                <strong>{{'@'}}lang('{{data['modelName']}} Created'):</strong> {{'@'}}displayDate(${{data['modelVariable']}}->created_at) ({{'{{'}}   ${{data['modelVariable']}}->created_at->diffForHumans() {{'}}'}}),
+                <strong>{{'@'}}lang('Last Updated'):</strong> {{'@'}}displayDate(${{data['modelVariable']}}->updated_at) ({{'{{'}}   ${{data['modelVariable']}}->updated_at->diffForHumans() {{'}}'}})
+
+                {{'@'}}if(${{data['modelVariable']}}->trashed())
+                    <strong>{{'@'}}lang('{{data['modelName']}} Deleted'):</strong> {{'@'}}displayDate(${{data['modelVariable']}}->deleted_at) ({{'{{'}}   ${{data['modelVariable']}}->deleted_at->diffForHumans() {{'}}'}})
+                {{'@'}}endif
+            </small>
+        </x-slot>
+    </x-backend.card>
+{{'@'}}endsection

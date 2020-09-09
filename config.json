@@ -1,0 +1,193 @@
+{
+  "templates": {
+    "backend_deleted_model_controller": {
+      "handler": "default",
+      "name": "backend_deleted_model_controller",
+      "description": "",
+      "template_path": "templates/backend_deleted_model_controller.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Controllers/Backend/{{data['modelName']}}/Deleted{{data['modelName']}}Controller.php"
+    },
+    "backend_model_controller": {
+      "handler": "default",
+      "name": "backend_model_controller",
+      "description": "",
+      "template_path": "templates/backend_model_controller.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Controllers/Backend/{{data['modelName']}}/{{data['modelName']}}Controller.php"
+    },
+    "backend_model_delete_request": {
+      "handler": "default",
+      "name": "backend_model_delete_request",
+      "description": "",
+      "template_path": "templates/backend_model_delete_request.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Requests/Backend/{{data['modelName']}}/Delete{{data['modelName']}}Request.php"
+    },
+    "backend_model_edit_request": {
+      "handler": "default",
+      "name": "backend_model_edit_request",
+      "description": "",
+      "template_path": "templates/backend_model_edit_request.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Requests/Backend/{{data['modelName']}}/Edit{{data['modelName']}}Request.php"
+    },
+    "backend_model_store_request": {
+      "handler": "default",
+      "name": "backend_model_store_request",
+      "description": "",
+      "template_path": "templates/backend_model_store_request.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Requests/Backend/{{data['modelName']}}/Store{{data['modelName']}}Request.php"
+    },
+    "backend_model_update_request": {
+      "handler": "default",
+      "name": "backend_model_update_request",
+      "description": "",
+      "template_path": "templates/backend_model_update_request.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Requests/Backend/{{data['modelName']}}/Update{{data['modelName']}}Request.php"
+    },
+    "livewire_table": {
+      "handler": "default",
+      "name": "livewire_table",
+      "description": "",
+      "template_path": "templates/livewire_table.jinja",
+      "output_path": "app/Http/Livewire/{{data['modelName']}}Table.php"
+    },
+    "model": {
+      "handler": "default",
+      "name": "model",
+      "description": "Generate Model in models directory for selected entity",
+      "template_path": "templates/model.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Models/{{data['modelName']}}.php"
+    },
+    "model_listener": {
+      "handler": "default",
+      "name": "model_listener",
+      "description": "",
+      "template_path": "templates/model_listener.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Listeners/{{data['modelName']}}EventListener.php"
+    },
+    "model_observer": {
+      "handler": "default",
+      "name": "model_observer",
+      "description": "",
+      "template_path": "templates/model_observer.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Observers/{{data['modelName']}}Observer.php"
+    },
+    "model_service": {
+      "handler": "default",
+      "name": "model_service",
+      "description": "",
+      "template_path": "templates/model_service.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Services/{{data['modelName']}}Service.php"
+    },
+    "model_traits_attributes": {
+      "handler": "default",
+      "name": "model_traits_attributes",
+      "description": "",
+      "template_path": "templates/model_traits_attributes.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Models/Traits/Attribute/{{data['modelName']}}Attribute.php"
+    },
+    "model_traits_methods": {
+      "handler": "default",
+      "name": "model_traits_methods",
+      "description": "",
+      "template_path": "templates/model_traits_methods.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Models/Traits/Method/{{data['modelName']}}Method.php"
+    },
+    "model_traits_relationships": {
+      "handler": "default",
+      "name": "model_traits_relationships",
+      "description": "",
+      "template_path": "templates/model_traits_relationships.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Models/Traits/Relationship/{{data['modelName']}}Relationship.php"
+    },
+    "model_traits_scopes": {
+      "handler": "default",
+      "name": "model_traits_scopes",
+      "description": "",
+      "template_path": "templates/model_traits_scopes.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Models/Traits/Scope/{{data['modelName']}}Scope.php"
+    },
+    "model_views_create": {
+      "handler": "default",
+      "name": "model_views_create",
+      "description": "",
+      "template_path": "templates/model_views_create.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/create.blade.php"
+    },
+    "model_views_deleted": {
+      "handler": "default",
+      "name": "model_views_deleted",
+      "description": "",
+      "template_path": "templates/model_views_deleted.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/deleted.blade.php"
+    },
+    "model_views_edit": {
+      "handler": "default",
+      "name": "model_views_edit",
+      "description": "",
+      "template_path": "templates/model_views_edit.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/edit.blade.php"
+    },
+    "model_views_includes_actions": {
+      "handler": "default",
+      "name": "model_views_includes_actions",
+      "description": "",
+      "template_path": "templates/model_views_includes_actions.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/includes/actions.blade.php"
+    },
+    "model_views_includes_breadcrumbs_links": {
+      "handler": "default",
+      "name": "model_views_includes_breadcrumbs_links",
+      "description": "",
+      "template_path": "templates/model_views_includes_breadcrumbs_links.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/includes/breadcrumb-links.blade.php"
+    },
+    "model_views_index": {
+      "handler": "default",
+      "name": "model_views_index",
+      "description": "",
+      "template_path": "templates/model_views_index.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/index.blade.php"
+    },
+    "model_views_show": {
+      "handler": "default",
+      "name": "model_views_show",
+      "description": "",
+      "template_path": "templates/model_views_show.jinja",
+      "output_path": "resources/views/backend/{{data['names']['spinalcase']}}/show.blade.php"
+    },
+    "migrate": {
+      "handler": "migrate-generator",
+      "name": "migrate",
+      "description": "",
+      "template_path": "templates/migrate.jinja",
+      "update_template_path": "templates/update_migrate.jinja",
+      "create_output_path": "database/migrations/{{data['today_date']}}_create_{{data['tableName']}}_table.php",
+      "update_output_path": "database/migrations/{{data['today_date']}}_update_{{data['tableName']}}_table.php"
+    },
+    "route": {
+      "handler": "default",
+      "name": "route",
+      "description": "",
+      "template_path": "templates/route.jinja",
+      "output_path": "routes/backend/{{data['names']['spinalcase']}}.php"
+    }
+  },
+  "data": {
+    "namespaces": {
+      "global": {
+        "livewireTables": "App\\Http\\Livewire",
+        "controllers": "App\\Http\\Controllers"
+      },
+      "currentEntity": {
+        "models": "App\\Domains\\{{data['entityName']}}\\Models",
+        "backendControllers": "App\\Domains\\{{data['entityName']}}\\Http\\Controllers\\Backend",
+        "frontendControllers": "App\\Domains\\{{data['entityName']}}\\Http\\Controllers\\Frontend",
+        "services": "App\\Domains\\{{data['entityName']}}\\Services",
+        "backendRequests": "App\\Domains\\{{data['entityName']}}\\Http\\Requests\\Backend",
+        "frontendRequests": "App\\Domains\\{{data['entityName']}}\\Http\\Requests\\Frontend",
+        "events": "App\\Domains\\{{data['entityName']}}\\Events",
+        "listeners": "App\\Domains\\{{data['entityName']}}\\Listeners",
+        "observers": "App\\Domains\\{{data['entityName']}}\\Observers"
+      }
+    }
+  }
+}

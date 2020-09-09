@@ -1,0 +1,126 @@
+<?php
+
+namespace {{data['namespaces']['currentEntity']['services']}};
+
+use {{data['namespaces']['currentEntity']['models']}}\{{data['modelName']}};
+use App\Exceptions\GeneralException;
+use App\Services\BaseService;
+use Exception;
+use Illuminate\Support\Facades\DB;
+
+/**
+ * Class {{data['modelName']}}Service.
+ */
+class {{data['modelName']}}Service extends BaseService
+{
+    /**
+     * {{data['modelName']}}Service constructor.
+     *
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     */
+    public function __construct({{data['modelName']}} ${{data['modelVariable']}})
+    {
+        $this->model = ${{data['modelVariable']}};
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return {{data['modelName']}}
+     * @throws GeneralException
+     * @throws \Throwable
+     */
+    public function store(array $data = []): {{data['modelName']}}
+    {
+        DB::beginTransaction();
+
+        try {
+            ${{data['modelVariable']}} = $this->model::create([
+                {% for column in data['fillable'] %}
+                '{{column}}' => $data['{{column}}'],
+                {% endfor %}
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw new GeneralException(__('There was a problem creating this {{data['modelVariable']}}. Please try again.'));
+        }
+
+        DB::commit();
+
+        return ${{data['modelVariable']}};
+    }
+
+    /**
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     * @param array $data
+     *
+     * @return {{data['modelName']}}
+     * @throws \Throwable
+     */
+    public function update({{data['modelName']}} ${{data['modelVariable']}}, array $data = []): {{data['modelName']}}
+    {
+        DB::beginTransaction();
+
+        try {
+            ${{data['modelVariable']}}->update([
+                {% for column in data['fillable'] %}
+                '{{column}}' => $data['{{column}}'],
+                {% endfor %}
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw new GeneralException(__('There was a problem updating this {{data['modelVariable']}}. Please try again.'));
+        }
+
+        DB::commit();
+
+        return ${{data['modelVariable']}};
+    }
+
+    /**
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return {{data['modelName']}}
+     * @throws GeneralException
+     */
+    public function delete({{data['modelName']}} ${{data['modelVariable']}}): {{data['modelName']}}
+    {
+        if ($this->deleteById(${{data['modelVariable']}}->id)) {
+            return ${{data['modelVariable']}};
+        }
+
+        throw new GeneralException('There was a problem deleting this {{data['modelVariable']}}. Please try again.');
+    }
+
+    /**
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return {{data['modelName']}}
+     * @throws GeneralException
+     */
+    public function restore({{data['modelName']}} ${{data['modelVariable']}}): {{data['modelName']}}
+    {
+        if (${{data['modelVariable']}}->restore()) {
+            return ${{data['modelVariable']}};
+        }
+
+        throw new GeneralException(__('There was a problem restoring this {{data['title']}}. Please try again.'));
+    }
+
+    /**
+     * @param {{data['modelName']}} ${{data['modelVariable']}}
+     *
+     * @return bool
+     * @throws GeneralException
+     */
+    public function destroy({{data['modelName']}} ${{data['modelVariable']}}): bool
+    {
+        if (${{data['modelVariable']}}->forceDelete()) {
+            return true;
+        }
+
+        throw new GeneralException(__('There was a problem permanently deleting this {{data['title']}}. Please try again.'));
+    }
+}

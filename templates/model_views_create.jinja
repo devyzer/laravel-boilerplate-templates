@@ -1,0 +1,35 @@
+{{'@'}}extends('backend.layouts.app')
+
+{{'@'}}section('title', __('Create {{data['modelName']}}'))
+
+{{'@'}}section('content')
+    <x-forms.post :action="route('admin.{{data['modelVariable']}}.store')">
+        <x-backend.card>
+            <x-slot name="header">
+                {{'@'}}lang('Create {{data['modelName']}}')
+            </x-slot>
+
+            <x-slot name="headerActions">
+                <x-utils.link class="card-header-action" :href="route('admin.{{data['modelVariable']}}.index')" :text="__('Cancel')" />
+            </x-slot>
+
+            <x-slot name="body">
+                {%for item in data['columns'] %}{%if item['inForm']==True %}
+                <div class="form-group row">
+                    <label for="{{item['name']}}" class="col-md-2 col-form-label">{{'@'}}lang('{{item['title']}}')</label>
+
+                    <div class="col-md-10">
+                        <input type="text" name="{{item['name']}}" class="form-control" placeholder="{{'{{'}}  __('{{item['title']}}') {{'}}'}} " value="{{'{{'}}  old('{{item['name']}}') {{'}}'}} " {%if item['frontendRules']['required']=="required" %} required  {%endif%} />
+                    </div>
+
+                </div><!--form-group-->
+                {% endif %}
+                {%endfor%}
+            </x-slot>
+
+            <x-slot name="footer">
+                <button class="btn btn-sm btn-primary float-right" type="submit">{{'@'}}lang('Create {{data['modelName']}}')</button>
+            </x-slot>
+        </x-backend.card>
+    </x-forms.post>
+{{'@'}}endsection

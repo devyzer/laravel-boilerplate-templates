@@ -1,0 +1,28 @@
+{{'@'}}extends('backend.layouts.app')
+
+{{'@'}}section('title', __('{{data['title']}}'))
+
+{{'@'}}section('breadcrumb-links')
+    {{'@'}}include('backend.{{data['names']['spinalcase']}}.includes.breadcrumb-links')
+{{'@'}}endsection
+
+{{'@'}}section('content')
+    <x-backend.card>
+        <x-slot name="header">
+            {{'@'}}lang('{{data['title']}}')
+        </x-slot>
+
+        <x-slot name="headerActions">
+            <x-utils.link
+                icon="c-icon cil-plus"
+                class="card-header-action"
+                :href="route('admin.{{data['modelVariable']}}.create')"
+                :text="__('Create {{data['modelName']}}')"
+            />
+        </x-slot>
+
+        <x-slot name="body">
+            <livewire:{{data['modelVariable']}}-table/>
+        </x-slot>
+    </x-backend.card>
+{{'@'}}endsection

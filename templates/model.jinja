@@ -16,9 +16,7 @@ use {{data['namespaces']['currentEntity']['models']}}\Traits\Scope\{{data['model
  */
 class {{data['modelName']}} extends Model
 {
-    use Eventually,
-        RecordableTrait,
-        SoftDeletes,
+    use SoftDeletes,
         {{data['modelName']}}Attribute,
         {{data['modelName']}}Method,
         {{data['modelName']}}Relationship,

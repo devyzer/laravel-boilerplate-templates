@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 /**
  * Class {{data['modelName']}}Controller.
  */
+ /** @OA\Info(title="{{data['slug']}} API", version="0.1") */
 class {{data['modelName']}}Controller extends Controller
 {
     /**
@@ -23,9 +24,9 @@ class {{data['modelName']}}Controller extends Controller
      *    description="Returns when {{data['modelName']}} are found",
      *    @OA\JsonContent(
      *     @OA\Items(
-     *       @OA\Property(property="id", type="string", example="1"),
-     *       @OA\Property(property="name", type="string", example="task 1"),
-     *       @OA\Property(property="description", type="string", example="description task 1"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *       @OA\Property(property="deleted_at", type="string", example="null"),
      *       @OA\Property(property="created_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *       @OA\Property(property="updated_at", type="string", example="2021-03-10T09:03:27.000000Z"),
@@ -66,9 +67,9 @@ class {{data['modelName']}}Controller extends Controller
      *    response=200,
      *    description="Returns when {{data['modelName']}} is found",
      *    @OA\JsonContent(
-     *       @OA\Property(property="id", type="string", example="1"),
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 1"),
-     *       @OA\Property(property="description", type="string", example="description {{data['modelVariable']}} 1"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *       @OA\Property(property="deleted_at", type="string", example="null"),
      *       @OA\Property(property="created_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *       @OA\Property(property="updated_at", type="string", example="2021-03-10T09:03:27.000000Z"),
@@ -84,7 +85,7 @@ class {{data['modelName']}}Controller extends Controller
     /**
      * @OA\Post (
      * path="api/{{data['modelVariable']}}",
-     * summary="Ceate New {{data['modelName']}}",
+     * summary="Create New {{data['modelName']}}",
      * description="Create One {{data['modelName']}}",
      * operationId="postOne{{data['modelName']}}s",
      * tags={"{{data['modelVariable']}}"},
@@ -92,9 +93,10 @@ class {{data['modelName']}}Controller extends Controller
      *    required=true,
      *    description="{{data['modelName']}} fields",
      *    @OA\JsonContent(
-     *       required={"name","description"},
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 2"),
-     *       @OA\Property(property="description", type="string", example="description {{data['modelVariable']}} 2"),
+     *       required={"name"},
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *    ),
      * ),
      * @OA\Response(
@@ -109,9 +111,9 @@ class {{data['modelName']}}Controller extends Controller
      *    description="Returns when {{data['modelName']}} has been created",
      *    @OA\JsonContent(
      *     @OA\Items(
-     *       @OA\Property(property="id", type="string", example="1"),
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 2"),
-     *       @OA\Property(property="description", type="string", example="description {{data['modelVariable']}} 2"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *       @OA\Property(property="created_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *       @OA\Property(property="updated_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *    )
@@ -147,8 +149,9 @@ class {{data['modelName']}}Controller extends Controller
      *    required=false,
      *    description="{{data['modelName']}} fields",
      *    @OA\JsonContent(
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 3"),
-     *       @OA\Property(property="description", type="string", example="description {{data['modelVariable']}} 3"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *    ),
      * ),
      * @OA\Response(
@@ -156,9 +159,9 @@ class {{data['modelName']}}Controller extends Controller
      *    description="Returns when {{data['modelName']}} has been created",
      *    @OA\JsonContent(
      *     @OA\Items(
-     *       @OA\Property(property="id", type="string", example="2"),
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 3"),
-     *       @OA\Property(property="description", type="string", example="description {{data['modelVariable']}} 3"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *       @OA\Property(property="created_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *       @OA\Property(property="updated_at", type="string", example="2021-03-10T09:04:27.000000Z"),
      *    )
@@ -199,9 +202,9 @@ class {{data['modelName']}}Controller extends Controller
      *    response=200,
      *    description="Returns when {{data['modelName']}}s are found",
      *    @OA\JsonContent(
-     *       @OA\Property(property="id", type="string", example="1"),
-     *       @OA\Property(property="name", type="string", example="{{data['modelVariable']}} 1"),
-     *       @OA\Property(property="description", type="string", example="null"),
+            {% for column in data['columns'] %}
+     *       @OA\Property(property="{{ column['name'] }}", type="{{ column['type'] }}", example="1"),
+            {% endfor %}
      *       @OA\Property(property="deleted_at", type="string", example="2021-03-10T15:47:13.000000Z"),
      *       @OA\Property(property="created_at", type="string", example="2021-03-10T09:03:27.000000Z"),
      *       @OA\Property(property="updated_at", type="string", example="2021-03-10T09:03:27.000000Z"),

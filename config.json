@@ -1,5 +1,26 @@
 {
   "templates": {
+    "sidebar": {
+      "handler": "default",
+      "name": "sidebar",
+      "description": "",
+      "template_path": "templates/sidebar.blade.jinja",
+      "output_path": "resources/views/backend/includes/sidebar.blade.php"
+    },
+    "composer": {
+      "handler": "default",
+      "name": "composer",
+      "description": "",
+      "template_path": "templates/composer.jinja",
+      "output_path": "composer.json"
+    },
+    "api_model_controller": {
+      "handler": "default",
+      "name": "api_model_controller",
+      "description": "",
+      "template_path": "templates/api_model_controller.jinja",
+      "output_path": "app/Domains/{{data['entityName']}}/Http/Controllers/Api/{{data['modelName']}}/{{data['modelName']}}Controller.php"
+    },
     "backend_deleted_model_controller": {
       "handler": "default",
       "name": "backend_deleted_model_controller",
@@ -169,6 +190,13 @@
       "description": "",
       "template_path": "templates/route.jinja",
       "output_path": "routes/backend/{{data['names']['spinalcase']}}.php"
+    },
+    "api_route": {
+      "handler": "default",
+      "name": "api_route",
+      "description": "",
+      "template_path": "templates/api_route.jinja",
+      "output_path": "routes/api.php"
     }
   },
   "data": {
@@ -179,6 +207,7 @@
       },
       "currentEntity": {
         "models": "App\\Domains\\{{data['entityName']}}\\Models",
+        "apiControllers": "App\\Domains\\{{data['entityName']}}\\Http\\Controllers\\Api",
         "backendControllers": "App\\Domains\\{{data['entityName']}}\\Http\\Controllers\\Backend",
         "frontendControllers": "App\\Domains\\{{data['entityName']}}\\Http\\Controllers\\Frontend",
         "services": "App\\Domains\\{{data['entityName']}}\\Services",

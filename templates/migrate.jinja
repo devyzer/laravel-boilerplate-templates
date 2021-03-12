@@ -22,8 +22,8 @@ class Create{{data['migrateName']}}Table extends Migration
             {% if data['count'](data['unique'])%}{% for item in data['unique'] %}
             $table->unique('{{item['name']}}'); {% endfor %} {% endif %}{%if data['timestamp']%}
             $table->timestamps();{% endif %}{% if data['count'](data['sluggable'])%}
-            $table->string('slug');{% endif %} {% if data['hasSoftDelete']%}
-            $table->softDeletes();{% endif %}{% if data['count'](data['sluggable'])%}
+            $table->string('slug');{% endif %}
+            $table->softDeletes();{% if data['count'](data['sluggable'])%}
             $table->unique('slug');{% endif %}
 
             {% if data['count'](data['foreign'])%}{% for item in data['foreign'] %}

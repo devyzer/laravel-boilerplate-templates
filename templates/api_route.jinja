@@ -1,24 +1,17 @@
-<?php
 
-use Illuminate\Http\Request;
+use {{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::group([
+    'prefix' => '{{data['modelVariable']}}',
+    'as' => '{{data['modelVariable']}}.',
+], function () {
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+    Route::get('/', [{{data['modelName']}}Controller::class, 'index'])
+    Route::post('/', [{{data['modelName']}}Controller::class, 'store'])->name('index');
+    Route::group(['prefix' => '{project}'], function () {
+        Route::get('/', [{{data['modelName']}}Controller::class, 'show'])->name('show');
+        Route::put('/', [{{data['modelName']}}Controller::class, 'update'])->name('update');
+        Route::delete('/', [{{data['modelName']}}Controller::class, 'delete'])->name('destroy');
+    });
+});
 
-Route::get('tasks', '{{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller@index');
-Route::get('tasks/{task}', '{{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller@show');
-Route::post('tasks', '{{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller@store');
-Route::put('tasks/{task}', '{{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller@update');
-Route::delete('tasks/{task}', '{{data['namespaces']['currentEntity']['apiControllers']}}\{{data['modelName']}}\{{data['modelName']}}Controller@delete');

@@ -40,7 +40,7 @@ Route::group([
             ->name('show')
             ->breadcrumbs(function (Trail $trail, {{data['modelName']}} ${{data['modelVariable']}}) {
                 $trail->parent('admin.{{data['modelVariable']}}.index')
-                    ->push(${{data['modelVariable']}}->title, route('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}}));
+                    ->push(${{data['modelVariable']}}->id, route('admin.{{data['modelVariable']}}.show', ${{data['modelVariable']}}));
             });
 
         Route::get('edit', [{{data['modelName']}}Controller::class, 'edit'])

@@ -65,7 +65,7 @@ class {{data['modelName']}}Table extends TableComponent
 
             Column::make(__('Actions'))
                 ->format(function ({{data['modelName']}} $model) {
-                    return view('backend.{{data['names']['spinalcase']}}.includes.actions',  ['model' => $model]);
+                    return view('backend.{{data['names']['spinalcase']}}.includes.actions',  ['{{data['modelVariable']}}' => $model]);
                 })
         ];
     }

@@ -1,11 +1,27 @@
 {
   "templates": {
+    "api_route": {
+      "handler": "append",
+      "name": "api_route",
+      "description": "",
+      "template_path": "templates/api_route.jinja",
+      "output_path": "routes/api.php",
+      "line": 19
+    },
     "sidebar": {
-      "handler": "default",
+      "handler": "append",
       "name": "sidebar",
       "description": "",
-      "template_path": "templates/sidebar.blade.jinja",
-      "output_path": "resources/views/backend/includes/sidebar.blade.php"
+      "template_path": "templates/sidebar.jinja",
+      "output_path": "resources/views/backend/includes/sidebar.blade.php",
+      "line": 20
+    },
+    "role": {
+      "handler": "default",
+      "name": "role",
+      "description": "",
+      "template_path": "templates/RoleController.jinja",
+      "output_path": "app/Domains/Auth/Http/Controllers/Backend/Role/RoleController.php",
     },
     "composer": {
       "handler": "default",
@@ -190,13 +206,6 @@
       "description": "",
       "template_path": "templates/route.jinja",
       "output_path": "routes/backend/{{data['names']['spinalcase']}}.php"
-    },
-    "api_route": {
-      "handler": "default",
-      "name": "api_route",
-      "description": "",
-      "template_path": "templates/api_route.jinja",
-      "output_path": "routes/api.php"
     }
   },
   "data": {

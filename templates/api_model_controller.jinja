@@ -9,12 +9,11 @@ use Illuminate\Http\Request;
 /**
  * Class {{data['modelName']}}Controller.
  */
- /** @OA\Info(title="{{data['slug']}} API", version="0.1") */
 class {{data['modelName']}}Controller extends Controller
 {
     /**
      * @OA\Get(
-     * path="api/{{data['modelVariable']}}",
+     * path="/api/{{data['modelVariable']}}",
      * summary="Get All {{data['modelName']}}s",
      * description="Show All {{data['modelName']}}s",
      * operationId="getAll{{data['modelName']}}s",
@@ -44,7 +43,7 @@ class {{data['modelName']}}Controller extends Controller
 
     /**
      * @OA\Get(
-     * path="api/{{data['modelVariable']}}/{id}",
+     * path="/api/{{data['modelVariable']}}/{id}",
      * summary="Get {{data['modelName']}} by id",
      * description="Show one {{data['modelName']}} by id",
      * operationId="getOne{{data['modelName']}}s",
@@ -82,9 +81,10 @@ class {{data['modelName']}}Controller extends Controller
     {
         return ${{data['modelVariable']}};
     }
+
     /**
      * @OA\Post (
-     * path="api/{{data['modelVariable']}}",
+     * path="/api/{{data['modelVariable']}}",
      * summary="Create New {{data['modelName']}}",
      * description="Create One {{data['modelName']}}",
      * operationId="postOne{{data['modelName']}}s",
@@ -124,16 +124,13 @@ class {{data['modelName']}}Controller extends Controller
 
     public function store(Request $request)
     {
-        if($request->has('description') || $request->has('name')) {
-            ${{data['modelVariable']}} = {{data['modelName']}}::create($request->all());
-            return response()->json(${{data['modelVariable']}}, 201);
-        }
-        return response()->json(array("error"=>"name and description field are required"), 401);
-
+        ${{data['modelVariable']}} = {{data['modelName']}}::create($request->all());
+        return response()->json(${{data['modelVariable']}}, 201);
     }
+
     /**
      * @OA\Put  (
-     * path="api/{{data['modelVariable']}}/{id}",
+     * path="/api/{{data['modelVariable']}}/{id}",
      * summary="Edit one {{data['modelName']}} by id",
      * description="update One {{data['modelName']}} by id",
      * operationId="postOne{{data['modelName']}}s",
@@ -179,7 +176,7 @@ class {{data['modelName']}}Controller extends Controller
 
     /**
      * @OA\Delete (
-     * path="api/{{data['modelVariable']}}/{id}",
+     * path="/api/{{data['modelVariable']}}/{id}",
      * summary="delete {{data['modelName']}} by id",
      * description="delete one {{data['modelName']}} by id",
      * operationId="deleteOne{{data['modelName']}}s",

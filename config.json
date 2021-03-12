@@ -21,7 +21,7 @@
       "name": "role",
       "description": "",
       "template_path": "templates/RoleController.jinja",
-      "output_path": "app/Domains/Auth/Http/Controllers/Backend/Role/RoleController.php",
+      "output_path": "app/Domains/Auth/Http/Controllers/Backend/Role/RoleController.php"
     },
     "composer": {
       "handler": "default",
